@@ -1,2 +1,5 @@
 # OpenTheDoorByLAN
-不改装门锁实现远程控制开门。Remote door opening without replace the lock of the door.
+
+English | [简体中文](README_ZH.md)
+
+A small invention that attaches to a physical door lock to enable remote control without replacing the existing lock. Designed for dormitories, shared apartments, and other scenarios where hardware replacement is impractical.
