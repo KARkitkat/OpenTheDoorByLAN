@@ -16,14 +16,21 @@ bool isRotated = false; // 是否旋转标志
 
 void handleRoot() {
   String buttonText = isRotated ? "Restore" : "rotate";
-  String html = "<html>"
-                "<body>"
-                "<h1>Servo Control</h1>"
-                "<form action=\"/Servo\" method=\"POST\">"
-                "<input type=\"submit\" value=\"" + buttonText + "\">"
-                "</form>"
-                "</body>"
-                "</html>";
+  String html = "<html>
+    <head>
+        <meta charset=\'UTF-8\'>
+        <title>网络servo开关服务器</title>
+    </head>
+    <center>
+        <h2>网络servo开关服务器</h2>
+    </center>
+    <center>
+        <form>
+            <button name=\"servo\" value=\'ON\' type=\'submit\'> servo ON </button>
+            <button name=\"servo\" value=\'OFF\' type=\'submit\'> servo OFF </button>
+        </form>
+    </center>
+</html>";
   server.send(200, "text/html", html);
 }
 
