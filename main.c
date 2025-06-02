@@ -14,23 +14,44 @@ const int initialAngle = 30; // 初始角度值
 const int rotatedAngle = 180; // 旋转角度值
 bool isRotated = false; // 是否旋转标志
 
+unsigned long rotateTime = 0; // 旋转时间戳
+
 void handleRoot() {
   String buttonText = isRotated ? "Restore" : "rotate";
-  String html = "<html>
-    <head>
-        <meta charset=\'UTF-8\'>
-        <title>网络servo开关服务器</title>
-    </head>
+  String html = "
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=\'UTF-8\'>
+    <title>网络servo开关服务器</title>
+    <style>
+        .button {
+            font-size: 40px;
+            padding: 10px 20px;
+        }
+
+        .powered-by {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
     <center>
-        <h2>网络servo开关服务器</h2>
-    </center>
-    <center>
+        <h2>局域网开关</h2>
         <form>
-            <button name=\"servo\" value=\'ON\' type=\'submit\'> servo ON </button>
-            <button name=\"servo\" value=\'OFF\' type=\'submit\'> servo OFF </button>
+            <button class=\"button\" name=\"servo\" value=\'ON\' type=\'submit\'> 🔑 </button>
+            <button class=\"button\" name=\"servo\" value=\'OFF\' type=\'submit\'> 🔒 </button>
+            <button class=\"button\" name=\"servo\" value=\'keepon\' type=\'submit\'> 🔓 </button>
         </form>
+        <p class=\"powered-by\">Powered by KARkitkat</p>
     </center>
-</html>";
+</body>
+
+</html>
+";
   server.send(200, "text/html", html);
 }
 
@@ -39,6 +60,7 @@ void handleServo() {
 
   if (isRotated) {
     servo.write(rotatedAngle); // 旋转到指定角度
+    rotateTime = millis(); // 记录旋转开始时间
   } else {
     servo.write(initialAngle); // 恢复到初始角度
   }
@@ -74,5 +96,11 @@ void setup() {
 
 void loop() {
   server.handleClient();
+
+  // 如果旋转时间超过5秒并且处于旋转状态，则恢复到初始角度
+  if (isRotated && (millis() - rotateTime >= 3000)) {
+    servo.write(initialAngle);
+    isRotated = false;
+  }
 }
 
