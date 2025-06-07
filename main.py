@@ -36,13 +36,32 @@ wifi_connect()
 
 html = '''<!DOCTYPE html>
 <html>
-<head><meta charset='UTF-8'><title>网络servo开关服务器</title></head>
-<center><h2>网络servo开关服务器</h2></center>
-<center><form>
-<button name="servo" value='ON' type='submit'> servo ON </button>
-<button name="servo" value='OFF' type='submit'> servo OFF </button>
-</form>
-</center></html>
+<head>
+  <meta charset='UTF-8'>
+  <title>局域网开关</title>
+  <style>
+    .button {
+      font-size: 40px;
+      padding: 10px 20px;
+    }
+	.powered-by {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <h2>局域网开关</h2>
+    <form>
+      <button class="button" name="servo" value='ON' type='submit'> 🔑 </button>
+      <button class="button" name="servo" value='OFF' type='submit'> 🔒 </button>
+	  <button class="button" name="servo" value='keepon' type='submit'> 🔓 </button>
+    </form>
+	<p class="powered-by">Powered by KARkitkat</p>
+  </center>
+</body>
+</html>
 '''
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
